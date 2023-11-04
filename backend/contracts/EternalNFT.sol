@@ -132,8 +132,40 @@ contract EternalNFT is ERC721URIStorage {
         ));
 
         _mint(msg.sender, newItemId);
+        // Vérifier que le NFT avec cet ID existe avant de définir son URI
+        require(_exists(newItemId), "Token with this ID does not exist");
+        // Mise en place du token URI
         _setTokenURI(newItemId, finalTokenURI);
 
         return newItemId;
+    }
+
+    // Function fetchMyNFTs() retrouvé un tableau de tokenIds d'un utilisateur
+    function fetchMyNFTs() public view returns (uint[] memory) {
+      uint tokenIdsCount = _tokenIds.current();
+      uint counter = 0;
+      uint currentIndex = 0;
+
+    // Boucle 1 : récupération d'un tableau de tokenIds par user
+      uint[] memory myTokenIds = new uint[](tokenIdsCount);
+
+       for (uint i = 0; i < tokenIdsCount; i++) {
+          if (ownerOf(i + 1) == msg.sender) {
+            myTokenIds[counter] = i + 1;
+            counter += 1;
+            }
+        }
+
+    // Boucle 2 : récupération du tableau final de tokenIds 
+      uint[] memory myNFTs = new uint[](counter);
+      for (uint i = 0; i < counter; i++) {
+        if (ownerOf(i + 1) == msg.sender) {
+            myNFTs[currentIndex] = myTokenIds[i];
+            currentIndex += 1;
+            myNFTs[i+1] = myTokenIds[i];
+         }
+      }
+    
+    return myNFTs;
     }
 }

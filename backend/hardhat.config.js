@@ -1,4 +1,5 @@
 require('@nomiclabs/hardhat-waffle');
+require('hardhat-gas-reporter');
 require('dotenv').config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
@@ -6,7 +7,7 @@ module.exports = {
   paths: {
     artifacts: '../client/artifacts',
   },
-  defaultNetwork: 'goerli',
+  defaultNetwork: 'hardhat',
   networks: {
     goerli: {
       url: 'https://ethereum-goerli.publicnode.com',
