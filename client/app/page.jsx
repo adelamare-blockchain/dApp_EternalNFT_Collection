@@ -7,6 +7,7 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 
 // Components
 import Loader from '@/components/Loader/Loader';
@@ -64,7 +65,7 @@ export default function Index() {
         const devChainId = 1337;
         if (chainId !== goerliChainId && chainId !== devChainId) {
           toast.error(
-            <>'You are not connected to the Goerli Testnet!'</>
+            <>You are not connected to the Goerli Testnet!</>
           );
 
           return;
@@ -84,8 +85,7 @@ export default function Index() {
       } else {
         toast.error(
           <>
-            Vous devez installer Metamask. Veuillez installer
-            l'extension{' '}
+            Vous devez installer Metamask :
             <span>
               <a
                 href='https://metamask.io/'
@@ -201,7 +201,7 @@ export default function Index() {
         getMintedNFT(tokenId);
       } else {
         setIsLoading(false);
-        toast.error(<>Ethereum object doesn't exist!</>);
+        toast.error(<>No Ethereum object!</>);
       }
     } catch (error) {
       console.error(error);
@@ -409,11 +409,13 @@ export default function Index() {
               {nfts.length > 0 ? (
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4'>
                   {nfts.map((nft, index) => (
-                    <img
+                    <Image
                       key={index}
                       src={nft.image}
+                      height={60}
+                      width={60}
                       alt=''
-                      className='h-60 w-60 rounded-lg shadow-2xl shadow-[#6FFFE9] hover:scale-105 transition duration-500 ease-in-out'
+                      className='rounded-lg shadow-2xl shadow-[#6FFFE9] hover:scale-105 transition duration-500 ease-in-out'
                     />
                   ))}
                 </div>
@@ -433,10 +435,12 @@ export default function Index() {
             </div>
             {isLoading && <Loader />}
             {mintedNFT && (
-              <img
+              <Image
                 src={mintedNFT}
                 alt=''
-                className='h-60 w-60 rounded-lg shadow-2xl shadow-[#6FFFE9] hover:scale-105 transition duration-500 ease-in-out'
+                height={60}
+                width={60}
+                className='rounded-lg shadow-2xl shadow-[#6FFFE9] hover:scale-105 transition duration-500 ease-in-out'
               />
             )}
           </div>
